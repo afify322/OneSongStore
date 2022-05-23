@@ -1,0 +1,121 @@
+﻿@model MVCmasr.ViewModels.RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Register";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Styles/Security/register.css")" rel="stylesheet" type="text/css" />
+}
+
+
+
+<div class="row register-container">
+    <div class="col-md-4 offset-1 form-container">
+
+        <div class="d-flex justify-content-center align-content-center mt-1">
+            <h1>@ViewData["Header"]</h1>
+        </div>
+        <hr />
+
+        <form asp-action="Register" enctype = "multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="ConfirmPassword" class="control-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <input asp-for="Role" class="form-control" type="hidden" value="@ViewData["Role"]" />
+                </div>
+            </div>
+
+            <div class="form-group custom-file">
+                <label asp-for="Picture" class="control-label text-muted custom-file-label"></label>
+                <input 
+                    type="file" 
+                    asp-for="Picture" 
+                    class="form-control custom-file-input" 
+                    accept="image/*"
+                    onchange=ShowImage(this) 
+                />
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+
+            <div class="form-group w-100 mt-3">
+                <input type="submit" value="Create" class="btn btn-primary w-100" />
+            </div>
+
+            <div id="logged-in">
+                Already Logged in? <a asp-action="Login">Login</a>
+            </div>
+        </form>
+
+    </div>
+    
+    <div id="picture-container" class="d-none col-md-3 offset-2">
+        <img src="#" atl="Picture Image" id="picture-image" class="img-thumbnail" />
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        let pictureElement = document.getElementById("Picture");
+        let pictureContainer = document.getElementById("picture-container");
+        let pictureImage = document.getElementById("picture-image");
+        
+        function ShowImage(picture)
+        {
+            let selectedFile = picture.value.split('\\').pop();
+            pictureElement.previousElementSibling.textContent = selectedFile;
+
+            let image = window.URL.createObjectURL(picture.files[0]);
+
+            pictureContainer.classList.remove('d-none');
+            pictureImage.setAttribute('src', image);
+        }
+    </script>
+}

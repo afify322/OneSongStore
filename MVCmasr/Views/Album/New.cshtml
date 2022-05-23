@@ -1,0 +1,106 @@
+﻿@model MVCmasr.ViewModels.AlbumGenreViewModel
+
+@{
+    ViewData["Title"] = "New";
+    //SelectList genreList = new SelectList(ViewBag.Genres,"Id","Name");
+}
+
+<h1>New</h1>
+
+<h4>Album</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveNew" enctype = "multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.Title" class="control-label"></label>
+                <input asp-for="@Model.Album.Title" class="form-control" />
+                <span asp-validation-for="@Model.Album.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.ReleaseDate" class="control-label"></label>
+                <input asp-for="@Model.Album.ReleaseDate" class="form-control" />
+                <span asp-validation-for="@Model.Album.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.SongsNumber" class="control-label"></label>
+                <input asp-for="@Model.Album.SongsNumber" class="form-control" />
+                <span asp-validation-for="@Model.Album.SongsNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.Price" class="control-label"></label>
+                <input asp-for="@Model.Album.Price" class="form-control" />
+                <span asp-validation-for="@Model.Album.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.CountInStock" class="control-label"></label>
+                <input asp-for="@Model.Album.CountInStock" class="form-control" />
+                <span asp-validation-for="@Model.Album.CountInStock" class="text-danger"></span>
+            </div>
+            <div class = "form-group">
+            <label asp-for = "@Model.Album.ImageFile "></label>
+            <input 
+                asp-for = "@Model.Album.ImageFile" 
+                class = "form-control" 
+                id="poster" 
+                accept = "image/*"
+                onchange=ShowImage(this)
+            />
+            </div>
+            <div class="form-group">
+
+                <label asp-for="@Model.Album.Genres" class="control-label"></label>
+                <select asp-for="@Model.SelectedGenresIds" class="form-control" multiple >
+                @foreach (var genre in @Model.Genres)
+               {
+                    <option value = "@genre.Id">@genre.Name</option>
+               }
+                </select>
+                <span asp-validation-for="@Model.Album.Genres" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+
+                <label asp-for="@Model.Album.Artists" class="control-label"></label>
+                <select asp-for="@Model.SelectedArtistsIds" class="form-control" multiple >
+                @foreach (var artist in @Model.Artists)
+               {
+                    <option value = "@artist.Id">@artist.Name</option>
+               }
+                </select>
+                <span asp-validation-for="@Model.Album.Artists" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div id="poster-container" class="d-none">
+            <img src="#" atl="Poster Image" id="poster-image" class="img-thumbnail" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        let posterElement = document.getElementById("poster");
+        let posterContainer = document.getElementById("poster-container");
+        let posterImage = document.getElementById("poster-image");
+        
+        function ShowImage(poster)
+        {
+            let image = window.URL.createObjectURL(poster.files[0]);
+
+            posterContainer.classList.remove('d-none');
+            posterImage.setAttribute('src', image);
+        }
+    </script>
+}

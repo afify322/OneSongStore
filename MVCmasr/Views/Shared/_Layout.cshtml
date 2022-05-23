@@ -1,0 +1,179 @@
+﻿@using System.Security.Claims
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MVCmasr</title>
+    <link rel="icon" href="~/favicon.ico">
+
+    @await RenderSectionAsync("Styles", required: false)
+
+    <link rel="stylesheet" href="~/Layout/style.css">
+</head>
+<body style="position: relative; min-height: 100vh; width: 100%">
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Layout/img/core-img/logo.png" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                                    <li><a asp-area="" asp-controller="Album" asp-action="Index">Albums</a></li>
+                                    <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                                            <li><a asp-area="" asp-controller="Album" asp-action="Index">Albums</a></li>
+                                    
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Login</a></li>
+                                            <li><a href="#">Dropdown</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                    <li><a href="#">Even Dropdown</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50">
+                                        @if(User.Identity.IsAuthenticated == false)
+                                        {
+                                            <a class="mr-4" asp-area="" asp-controller="Account" asp-action="Login" id="loginBtn">Login</a>
+                                            <a asp-area="" asp-controller="Account" asp-action="Register" id="loginBtn">Register</a>
+                                        }
+                                        else
+                                        {
+                                            <a 
+                                                class="mr-4"
+                                                asp-area="" 
+                                                asp-controller="User" 
+                                                asp-action="index"
+                                                asp-route-id = "@User.Claims.FirstOrDefault(c => c.Type == "Id").Value"
+                                                id="userProfile">
+                                                Welcome  @User.Claims.FirstOrDefault(c => c.Type == "Name").Value
+                                            </a>
+                                            <a asp-area="" asp-controller="Account" asp-action="Signout" id="logoutBtn">Logout</a>
+                                             
+                                            @*@if(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "admin")
+                                            {
+                                                <div>
+                                                    <a class="ml-4" asp-area="" asp-controller="Account" asp-action="RegisterAdmin" id="registerAdminBtn">Add Admin</a>
+                                                </div>
+                                            }*@
+                                        }
+                                    </div>
+
+                                    <!-- Cart Button -->
+                                    <div class="cart-btn">
+                                        <a asp-controller="Order" asp-action="Cart"><span class="icon-shopping-cart"></span> <span class="quantity">1</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <div style="position: relative; z-index: 0; padding-bottom: 10vh">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+
+        <!-- ##### Footer Area Start ##### -->
+    @*<footer class="footer-area container-fluid" style="position: absolute; bottom: 0;">
+        <div class="container">
+            <div class="row d-flex flex-wrap align-items-center">
+                <div class="col-12 col-md-6">
+                    <a href="#"><img src="~/Layout/img/core-img/logo.png" alt=""></a>
+                    <p class="copywrite-text"><a href="#">
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Website is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a asp-area="" asp-controller="Home" asp-action="Index" target="_blank">MVCmasr</a></p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="footer-nav">
+                        <ul>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li><a asp-area="" asp-controller="Album" asp-action="Index">Albums</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>*@
+
+
+
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="~/Layout/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="~/Layout/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/Layout/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="~/Layout/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="~/Layout/js/active.js"></script>
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

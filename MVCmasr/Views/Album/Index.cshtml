@@ -1,0 +1,138 @@
+﻿@model List<Album>
+
+@{
+    ViewData["Title"] = "Index";
+}
+      
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(/Layout/img/bg-img/breadcumb3.jpg);">
+        <div class="bradcumbContent">
+            <p>See what’s new</p>
+            <h2>Latest Albums</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Album Catagory Area Start ##### -->
+    <section class="album-catagory section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
+                        <a href="#" data-filter="*">Browse All</a>
+                        <a href="#" data-filter=".a" class="active">A</a>
+                        <a href="#" data-filter=".b">B</a>
+                        <a href="#" data-filter=".c">C</a>
+                        <a href="#" data-filter=".d">D</a>
+                        <a href="#" data-filter=".e">E</a>
+                        <a href="#" data-filter=".f">F</a>
+                        <a href="#" data-filter=".g">G</a>
+                        <a href="#" data-filter=".h">H</a>
+                        <a href="#" data-filter=".i">I</a>
+                        <a href="#" data-filter=".j">J</a>
+                        <a href="#" data-filter=".k">K</a>
+                        <a href="#" data-filter=".l">L</a>
+                        <a href="#" data-filter=".m">M</a>
+                        <a href="#" data-filter=".n">N</a>
+                        <a href="#" data-filter=".o">O</a>
+                        <a href="#" data-filter=".p">P</a>
+                        <a href="#" data-filter=".q">Q</a>
+                        <a href="#" data-filter=".r">R</a>
+                        <a href="#" data-filter=".s">S</a>
+                        <a href="#" data-filter=".t">T</a>
+                        <a href="#" data-filter=".u">U</a>
+                        <a href="#" data-filter=".v">V</a>
+                        <a href="#" data-filter=".w">W</a>
+                        <a href="#" data-filter=".x">X</a>
+                        <a href="#" data-filter=".y">Y</a>
+                        <a href="#" data-filter=".z">Z</a>
+                        <a href="#" data-filter=".number">0-9</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row oneMusic-albums">
+
+
+                 @for (var i = 0; i < Model.Count; i++)
+    {
+
+
+        <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-3 single-album-item @Model[i].Title.ToLower()[0]">
+                    <div class="single-album-area">
+                        <div class="album-thumb">
+                            <img src="@Html.DisplayFor(album => album[i].Image)" alt="">
+                            <!-- Album Price -->
+                            <div class="album-price">
+                                <p>$@Html.DisplayFor(album => album[i].Price)</p>
+                            </div>
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                @*<a href="~/Layout/AlbumDetails.html" class="video--play--btn"><span class="icon-play-button"></span></a>*@
+                                <a asp-controller="Album" asp-action="Details" asp-route-id="@Model[i].Id" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>@Html.DisplayFor(album => album[i].Title)</h5>
+                            </a>
+                            <p>@Html.DisplayFor(album => album[i].Artists)</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+      }          
+
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center">
+                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+    <!-- ##### Album Catagory Area End ##### -->
+
+
+
+
+        @section Scripts{
+        <script>
+            //function closePreview(){
+                //document.getElementById("cartBtn").innerText = "Remove From Cart";
+                //document.getElementById("cartBtn").setAttribute("style", "background-color: red;");
+            //}
+
+
+                //window.onload = function() {
+	               // if(!window.location.hash) {
+		              //  window.location = window.location + '#loaded';
+		              //  window.location.reload();
+	               // }
+                //}
+
+
+            //window.addEventListener('keydown', (e) => {
+            //  console.log(e)
+            //})
+
+            //window.dispatchEvent(new KeyboardEvent('keydown', {
+            //  key: "Escape",
+            //  keyCode: 27,
+            //  code: "Escape",
+            //  which: 27,
+            //  shiftKey: false,
+            //  ctrlKey: false,
+            //  metaKey: false
+            //}));
+
+        </script>
+    }

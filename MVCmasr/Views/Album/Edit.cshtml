@@ -1,0 +1,96 @@
+﻿@model MVCmasr.ViewModels.AlbumGenreViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Album</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveEdit" enctype = "multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Album.Id" />
+            <div class="form-group">
+                <label asp-for="@Model.Album.Title" class="control-label"></label>
+                <input asp-for="@Model.Album.Title" class="form-control" />
+                <span asp-validation-for="@Model.Album.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.ReleaseDate" class="control-label"></label>
+                <input asp-for="@Model.Album.ReleaseDate" class="form-control" />
+                <span asp-validation-for="@Model.Album.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.SongsNumber" class="control-label"></label>
+                <input asp-for="@Model.Album.SongsNumber" class="form-control" />
+                <span asp-validation-for="@Model.Album.SongsNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.Price" class="control-label"></label>
+                <input asp-for="@Model.Album.Price" class="form-control" />
+                <span asp-validation-for="@Model.Album.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Album.CountInStock" class="control-label"></label>
+                <input asp-for="@Model.Album.CountInStock" class="form-control" />
+                <span asp-validation-for="@Model.Album.CountInStock" class="text-danger"></span>
+            </div>
+            <div class = "form-group">
+            <label asp-for = "@Model.Album.ImageFile "></label>
+            <input asp-for = "@Model.Album.ImageFile" class = "form-control" accept = "image/*"/>
+            </div>
+             <div class="form-group">
+
+                <label asp-for="@Model.Album.Genres" class="control-label"></label>
+                <select asp-for="@Model.SelectedGenresIds" class="form-control" multiple >
+                @foreach (var genre in @Model.Genres)
+               {
+                   if(@Model.SelectedGenresIds.Contains(genre.Id))
+                   {
+                        <option selected value = "@genre.Id">@genre.Name</option>
+                    }
+                    else
+                    {
+                        <option value = "@genre.Id">@genre.Name</option>
+                            
+                    }
+                }
+                </select>
+                <span asp-validation-for="@Model.Album.Genres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <label asp-for="@Model.Album.Artists" class="control-label"></label>
+                <select asp-for="@Model.SelectedArtistsIds" class="form-control" multiple >
+                @foreach (var artist in @Model.Artists)
+               {
+                   if(@Model.SelectedArtistsIds.Contains(artist.Id))
+                   {
+                        <option selected value = "@artist.Id">@artist.Name</option>
+                    }
+                    else
+                    {
+                        <option value = "@artist.Id">@artist.Name</option>
+                            
+                    }
+                }
+                </select>
+                <span asp-validation-for="@Model.Album.Genres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
